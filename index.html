@@ -632,6 +632,21 @@
             <button class="admin-close" id="adminClose">&times;</button>
         </div>
         <div class="admin-body">
+            <!-- 发布提示 -->
+            <div class="publish-notice">
+                <strong>📢 视频发布说明</strong>
+                <p>1. 将手术视频上传到 <strong>B站</strong> 或 <strong>YouTube</strong></p>
+                <p>2. 复制视频链接，在下方填写信息</p>
+                <p>3. 点击 <strong>"发布到全网"</strong>，所有访客即可看到</p>
+            </div>
+
+            <!-- GitHub Token 输入 -->
+            <div class="form-group token-group">
+                <label>GitHub Token（发布视频时需要，仅需输入一次）</label>
+                <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx">
+                <p class="token-hint">获取：github.com/settings/tokens → 勾选 repo</p>
+            </div>
+
             <div class="admin-upload">
                 <h4>添加新视频</h4>
                 <div class="form-group">
@@ -647,16 +662,25 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label>视频来源</label>
+                    <select id="videoSource">
+                        <option value="bilibili">B站视频（推荐）</option>
+                        <option value="youtube">YouTube 视频</option>
+                        <option value="direct">直链视频（MP4地址）</option>
+                        <option value="local">本地文件上传（仅本机预览）</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>视频描述</label>
-                    <textarea id="videoDesc" rows="3" placeholder="简要描述手术内容..."></textarea>
+                    <textarea id="videoDesc" rows="2" placeholder="简要描述手术内容..."></textarea>
                 </div>
-                <div class="form-group">
-                    <label>视频链接（MP4地址或嵌入代码）</label>
-                    <input type="text" id="videoUrl" placeholder="https://example.com/video.mp4">
+                <div class="form-group" id="urlInputGroup">
+                    <label>视频链接</label>
+                    <input type="text" id="videoUrl" placeholder="https://www.bilibili.com/video/BV1xxxxxxxx">
                 </div>
-                <div class="form-group">
-                    <label>或上传视频文件</label>
-                    <div class="file-upload-area" id="fileUploadArea">
+                <div class="form-group" id="fileUploadGroup">
+                    <label>或上传视频文件（仅本机可见）</label>
+                    <div class="file-upload-area" id="fileUploadArea" style="display:none;">
                         <input type="file" id="videoFile" accept="video/*" hidden>
                         <p>点击选择视频文件</p>
                         <p class="file-hint">支持 MP4, WebM, MOV 格式</p>
@@ -667,9 +691,10 @@
                     <input type="file" id="videoThumb" accept="image/*">
                 </div>
                 <button class="btn btn-primary admin-submit" id="addVideoBtn">添加视频</button>
+                <button class="btn btn-primary publish-btn" id="publishBtn">🚀 发布到全网</button>
             </div>
             <div class="admin-list">
-                <h4>已上传视频</h4>
+                <h4>视频列表</h4>
                 <div class="admin-video-list" id="adminVideoList">
                     <!-- 动态生成 -->
                 </div>
