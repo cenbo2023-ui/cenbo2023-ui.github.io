@@ -1,79 +1,12 @@
 [
     {
-        "id": "bv-1zdmq6newf",
+        "id": "video-001",
         "title": "高颈段海绵状血管瘤切除",
         "category": "spine",
-        "desc": "高颈段脊髓髓内海绵状血管瘤显微外科切除，精细操作保护脊髓功能。",
         "source": "bilibili",
         "url": "https://www.bilibili.com/video/BV1zdMQ6NEWF/",
-        "thumb": "",
+        "desc": "高颈段脊髓髓内海绵状血管瘤显微外科切除手术。海绵状血管瘤是中枢神经系统常见的血管畸形，位于高颈段脊髓髓内时手术风险极高，需要在保护脊髓功能的前提下实现病灶全切。",
         "date": "2026-08-03",
         "duration": ""
-    },
-    {
-        "id": "demo-1",
-        "title": "经鼻蝶垂体瘤内镜微创切除术",
-        "category": "endoscope",
-        "desc": "神经内镜下经鼻腔蝶窦入路切除垂体瘤，微创手术，术后恢复快。",
-        "source": "bilibili",
-        "url": "",
-        "thumb": "",
-        "date": "2026-07-28",
-        "duration": "15:32"
-    },
-    {
-        "id": "demo-2",
-        "title": "额叶脑膜瘤显微手术全切",
-        "category": "brain",
-        "desc": "显微镜下精准切除额叶凸面脑膜瘤，完整保留周围脑组织及功能。",
-        "source": "bilibili",
-        "url": "",
-        "thumb": "",
-        "date": "2026-07-15",
-        "duration": "22:18"
-    },
-    {
-        "id": "demo-3",
-        "title": "椎管内神经鞘瘤显微切除",
-        "category": "spine",
-        "desc": "后正中入路显微镜下切除椎管内髓外硬膜下神经鞘瘤，脊髓功能完整保留。",
-        "source": "bilibili",
-        "url": "",
-        "thumb": "",
-        "date": "2026-07-02",
-        "duration": "18:45"
-    },
-    {
-        "id": "demo-4",
-        "title": "听神经瘤面神经保留显微手术",
-        "category": "brain",
-        "desc": "乙状窦后入路显微镜下切除听神经瘤，解剖保留面神经功能。",
-        "source": "bilibili",
-        "url": "",
-        "thumb": "",
-        "date": "2026-06-20",
-        "duration": "28:10"
-    },
-    {
-        "id": "demo-5",
-        "title": "脑室镜下三脑室底造瘘术",
-        "category": "endoscope",
-        "desc": "神经内镜下行第三脑室底造瘘术治疗梗阻性脑积水，避免分流管植入。",
-        "source": "bilibili",
-        "url": "",
-        "thumb": "",
-        "date": "2026-06-08",
-        "duration": "12:55"
-    },
-    {
-        "id": "demo-6",
-        "title": "颈段髓内肿瘤显微切除",
-        "category": "spine",
-        "desc": "高颈段脊髓内室管膜瘤显微外科切除，术中电生理监测保护脊髓功能。",
-        "source": "bilibili",
-        "url": "",
-        "thumb": "",
-        "date": "2026-05-22",
-        "duration": "25:30"
     }
 ]
