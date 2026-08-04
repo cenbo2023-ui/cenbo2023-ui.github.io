@@ -228,6 +228,7 @@ img {
     font-weight: 600;
     color: #c9a84c;
     margin-bottom: 16px;
+    white-space: nowrap;
 }
 .hero-line-bottom {
     font-size: 2.5rem;
