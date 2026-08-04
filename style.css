@@ -222,8 +222,9 @@ img {
     padding: 8px 28px;
     background: rgba(201, 168, 76, 0.1);
     color: #c9a84c;
-    font-size: 4.0rem;
+    font-size: 3.0rem;
     font-weight: 600;
+    white-space: nowrap;
     border-radius: 50px;
     margin-bottom: 24px;
     border: 1px solid rgba(201, 168, 76, 0.3);
