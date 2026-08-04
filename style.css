@@ -224,7 +224,7 @@ img {
     margin: 0;
 }
 .hero-line-top {
-    font-size: 3.0rem;
+    font-size: 2.2rem;
     font-weight: 600;
     color: #c9a84c;
     margin-bottom: 16px;
@@ -244,7 +244,7 @@ img {
 }
 .hero-dot {
     display: inline-block;
-    width: 1.5em;
+    width: 2rem;
     text-align: center;
     flex-shrink: 0;
 }
