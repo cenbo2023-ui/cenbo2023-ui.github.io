@@ -217,36 +217,38 @@ img {
     animation: fadeInUp 1s ease;
 }
 
-.hero-tag {
-    display: inline-block;
-    padding: 8px 28px;
-    background: rgba(201, 168, 76, 0.1);
-    color: #c9a84c;
+.hero-line {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    margin: 0;
+}
+.hero-line-top {
     font-size: 3.0rem;
     font-weight: 600;
-    white-space: nowrap;
-    border-radius: 50px;
-    margin-bottom: 24px;
-    border: 1px solid rgba(201, 168, 76, 0.3);
+    color: #c9a84c;
+    margin-bottom: 16px;
 }
-
-.hero-title {
+.hero-line-bottom {
     font-size: 2.5rem;
     font-weight: 900;
     color: #cc2222;
-    line-height: 1.2;
     margin-bottom: 20px;
     letter-spacing: 2px;
 }
 
 .hero-left {
-    display: inline-block;
-    width: 18rem;
+    flex: 1;
     text-align: right;
 }
-
-.hero-right {
+.hero-dot {
     display: inline-block;
+    width: 1.5em;
+    text-align: center;
+    flex-shrink: 0;
+}
+.hero-right {
+    flex: 1;
     text-align: left;
 }
 
