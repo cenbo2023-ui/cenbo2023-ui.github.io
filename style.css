@@ -1032,6 +1032,48 @@ img {
     transform: translateX(4px);
 }
 
+/* ============ 医学书籍 ============ */
+.books {
+    background: var(--white);
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.book-card {
+    background: var(--gray-50);
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.book-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.book-cover {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.book-card h4 {
+    font-size: 1.1rem;
+    color: var(--dark);
+    margin-bottom: 8px;
+}
+
+.book-card p {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    line-height: 1.5;
+}
+
 /* ============ 联系我们 ============ */
 .contact {
     background: var(--gray-50);
