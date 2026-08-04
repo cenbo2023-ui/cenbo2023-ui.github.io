@@ -201,13 +201,11 @@ img {
 .hero-bg {
     position: absolute;
     inset: 0;
-    background: url('hospital_bg.png') center/cover no-repeat;
+    background: #fff;
 }
 
 .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 30, 60, 0.6);
+    display: none;
 }
 
 .hero-content {
@@ -221,42 +219,41 @@ img {
 
 .hero-tag {
     display: inline-block;
-    padding: 6px 20px;
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 500;
+    padding: 8px 28px;
+    background: rgba(200, 30, 30, 0.08);
+    color: #cc2222;
+    font-size: 1.2rem;
+    font-weight: 600;
     border-radius: 50px;
     margin-bottom: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(200, 30, 30, 0.3);
 }
 
 .hero-title {
     font-size: 3.5rem;
     font-weight: 900;
-    color: #fff;
+    color: var(--dark);
     line-height: 1.2;
     margin-bottom: 20px;
     letter-spacing: 2px;
 }
 
 .hero-title .accent {
-    color: #7dd3fc;
-    background: none;
-    -webkit-background-clip: unset;
-    -webkit-text-fill-color: unset;
-    background-clip: unset;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .hero-subtitle {
     font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--gray-700);
     line-height: 1.8;
     margin-bottom: 36px;
 }
 
 .hero-subtitle strong {
-    color: #fff;
+    color: var(--primary-dark);
     font-weight: 700;
 }
 
@@ -336,30 +333,7 @@ img {
 }
 
 .scroll-indicator {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 50px;
-    border: 2px solid var(--gray-300);
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    padding-top: 8px;
-}
-
-.scroll-indicator span {
-    width: 4px;
-    height: 8px;
-    background: var(--primary);
-    border-radius: 2px;
-    animation: scrollDot 2s infinite;
-}
-
-@keyframes scrollDot {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(15px); opacity: 0; }
+    display: none;
 }
 
 @keyframes fadeInUp {
