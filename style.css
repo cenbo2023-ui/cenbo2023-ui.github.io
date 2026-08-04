@@ -239,6 +239,17 @@ img {
     letter-spacing: 2px;
 }
 
+.hero-left {
+    display: inline-block;
+    width: 18rem;
+    text-align: right;
+}
+
+.hero-right {
+    display: inline-block;
+    text-align: left;
+}
+
 .hero-subtitle {
     font-size: 1.2rem;
     color: var(--gray-700);
