@@ -220,19 +220,19 @@ img {
 .hero-tag {
     display: inline-block;
     padding: 8px 28px;
-    background: rgba(200, 30, 30, 0.08);
-    color: #cc2222;
-    font-size: 3.0rem;
+    background: rgba(201, 168, 76, 0.1);
+    color: #c9a84c;
+    font-size: 4.0rem;
     font-weight: 600;
     border-radius: 50px;
     margin-bottom: 24px;
-    border: 1px solid rgba(200, 30, 30, 0.3);
+    border: 1px solid rgba(201, 168, 76, 0.3);
 }
 
 .hero-title {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     font-weight: 900;
-    color: #0066cc;
+    color: #cc2222;
     line-height: 1.2;
     margin-bottom: 20px;
     letter-spacing: 2px;
