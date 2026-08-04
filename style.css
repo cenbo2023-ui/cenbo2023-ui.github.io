@@ -232,17 +232,13 @@ img {
 .hero-title {
     font-size: 3.5rem;
     font-weight: 900;
-    color: var(--dark);
-    line-height: 1.2;
-    margin-bottom: 20px;
-    letter-spacing: 2px;
-}
-
-.hero-title .accent {
     background: linear-gradient(135deg, var(--primary), var(--accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
 }
 
 .hero-subtitle {
