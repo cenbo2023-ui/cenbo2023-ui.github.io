@@ -47,7 +47,7 @@ html {
 body {
     font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     color: var(--gray-900);
-    background: var(--white);
+    background: #e8f2fb;
     line-height: 1.7;
     overflow-x: hidden;
 }
@@ -222,7 +222,7 @@ img {
     padding: 8px 28px;
     background: rgba(200, 30, 30, 0.08);
     color: #cc2222;
-    font-size: 1.2rem;
+    font-size: 3.0rem;
     font-weight: 600;
     border-radius: 50px;
     margin-bottom: 24px;
