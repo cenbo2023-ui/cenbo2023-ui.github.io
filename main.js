@@ -669,58 +669,36 @@ document.addEventListener('DOMContentLoaded', () => {
 function initVisitorCounter() {
     const today = new Date().toISOString().split('T')[0];
     const lastVisit = localStorage.getItem('nb_visit_date');
+    const cachedTotal = localStorage.getItem('nb_total_visits');
 
-    // 尝试多个计数服务，提高可靠性
-    const fetchCount = async (endpoint) => {
-        try {
-            const resp = await fetch(endpoint, { signal: AbortSignal.timeout(5000) });
-            if (!resp.ok) throw new Error('Failed');
-            const data = await resp.json();
-            return data.value || data.count || null;
-        } catch {
-            return null;
-        }
-    };
+    // 今日访问（本地计数器，始终可用）
+    let todayCount = 1;
+    if (lastVisit === today) {
+        todayCount = parseInt(localStorage.getItem('nb_today_count') || '0') + 1;
+    }
+    localStorage.setItem('nb_today_count', todayCount);
+    document.getElementById('todayVisits').textContent = todayCount.toLocaleString();
 
-    // 总访问量
-    (async () => {
-        const namespace = 'cenbo2023-neurosurgery';
-        let count = null;
-
-        // 尝试 counterapi.dev
-        if (lastVisit !== today) {
-            count = await fetchCount(`https://api.counterapi.dev/v1/${namespace}/total/up`);
-        } else {
-            count = await fetchCount(`https://api.counterapi.dev/v1/${namespace}/total`);
-        }
-
-        // 备用: countapi.xyz
-        if (count === null && lastVisit !== today) {
-            count = await fetchCount(`https://api.countapi.xyz/hit/${namespace}/total`);
-        }
-
-        if (count !== null) {
-            document.getElementById('totalVisits').textContent = count.toLocaleString();
-            localStorage.setItem('nb_visit_date', today);
-            localStorage.setItem('nb_total_visits', count);
-        } else {
-            // 最终降级: 显示本地缓存或默认值
-            const cached = localStorage.getItem('nb_total_visits');
-            document.getElementById('totalVisits').textContent = cached || '—';
-        }
-    })();
-
-    // 今日访问量
-    (async () => {
-        const namespace = 'cenbo2023-neurosurgery';
-        let count = await fetchCount(`https://api.counterapi.dev/v1/${namespace}/${today}/up`);
-        if (count === null) {
-            count = await fetchCount(`https://api.countapi.xyz/hit/${namespace}/${today}`);
-        }
-        if (count !== null) {
-            document.getElementById('todayVisits').textContent = count.toLocaleString();
-        } else {
-            document.getElementById('todayVisits').textContent = '—';
-        }
-    })();
+    // 总访问量：首次或跨天时调用 hits.dwyl.com（已验证可靠）
+    if (lastVisit !== today || !cachedTotal) {
+        fetch('https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.json')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                var count = parseInt(data.message) || 0;
+                document.getElementById('totalVisits').textContent = count.toLocaleString();
+                localStorage.setItem('nb_total_visits', count);
+                localStorage.setItem('nb_visit_date', today);
+            })
+            .catch(function() {
+                // 降级：显示缓存值或初始值
+                if (cachedTotal) {
+                    document.getElementById('totalVisits').textContent = parseInt(cachedTotal).toLocaleString();
+                } else {
+                    document.getElementById('totalVisits').textContent = '1';
+                }
+            });
+    } else {
+        // 同日访问，直接显示缓存
+        document.getElementById('totalVisits').textContent = parseInt(cachedTotal).toLocaleString();
+    }
 }
