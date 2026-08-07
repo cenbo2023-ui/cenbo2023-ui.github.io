@@ -1187,6 +1187,39 @@ img {
     margin-bottom: 4px;
 }
 
+/* ============ 访问统计 ============ */
+.visitor-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.visitor-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.visitor-icon {
+    font-size: 1.2rem;
+}
+
+.visitor-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.visitor-count {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.85);
+    min-width: 50px;
+    text-align: center;
+}
+
 /* ============ 视频弹窗 ============ */
 .video-modal {
     position: fixed;
