@@ -1581,8 +1581,18 @@ img {
         display: flex;
     }
 
-    .hero-title {
-        font-size: 2.2rem;
+    .hero-line-top {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    .hero-line-bottom {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+
+    .hero-dot {
+        width: 1.2rem;
     }
 
     .hero-subtitle {
