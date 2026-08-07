@@ -660,4 +660,67 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     `;
     document.head.appendChild(style);
+
+    // 访问统计
+    initVisitorCounter();
 });
+
+// ============ 访问统计 ============
+function initVisitorCounter() {
+    const today = new Date().toISOString().split('T')[0];
+    const lastVisit = localStorage.getItem('nb_visit_date');
+
+    // 尝试多个计数服务，提高可靠性
+    const fetchCount = async (endpoint) => {
+        try {
+            const resp = await fetch(endpoint, { signal: AbortSignal.timeout(5000) });
+            if (!resp.ok) throw new Error('Failed');
+            const data = await resp.json();
+            return data.value || data.count || null;
+        } catch {
+            return null;
+        }
+    };
+
+    // 总访问量
+    (async () => {
+        const namespace = 'cenbo2023-neurosurgery';
+        let count = null;
+
+        // 尝试 counterapi.dev
+        if (lastVisit !== today) {
+            count = await fetchCount(`https://api.counterapi.dev/v1/${namespace}/total/up`);
+        } else {
+            count = await fetchCount(`https://api.counterapi.dev/v1/${namespace}/total`);
+        }
+
+        // 备用: countapi.xyz
+        if (count === null && lastVisit !== today) {
+            count = await fetchCount(`https://api.countapi.xyz/hit/${namespace}/total`);
+        }
+
+        if (count !== null) {
+            document.getElementById('totalVisits').textContent = count.toLocaleString();
+            localStorage.setItem('nb_visit_date', today);
+            localStorage.setItem('nb_total_visits', count);
+        } else {
+            // 最终降级: 显示本地缓存或默认值
+            const cached = localStorage.getItem('nb_total_visits');
+            document.getElementById('totalVisits').textContent = cached || '—';
+        }
+    })();
+
+    // 今日访问量
+    (async () => {
+        const namespace = 'cenbo2023-neurosurgery';
+        let count = await fetchCount(`https://api.counterapi.dev/v1/${namespace}/${today}/up`);
+        if (count === null) {
+            count = await fetchCount(`https://api.countapi.xyz/hit/${namespace}/${today}`);
+        }
+        if (count !== null) {
+            document.getElementById('todayVisits').textContent = count.toLocaleString();
+        } else {
+            document.getElementById('todayVisits').textContent = '—';
+        }
+    })();
+}
