@@ -679,24 +679,31 @@ function initVisitorCounter() {
     localStorage.setItem('nb_today_count', todayCount);
     document.getElementById('todayVisits').textContent = todayCount.toLocaleString();
 
-    // 总访问量：先显示缓存，通过 JS 加载 badge 触发 dwyl 计数，再拉取最新数据
-    if (cachedTotal) {
-        document.getElementById('totalVisits').textContent = parseInt(cachedTotal).toLocaleString();
+    // 总访问量：通过 JS Image 触发 dwyl 计数，再拉取最新数据
+    document.getElementById('totalVisits').textContent = cachedTotal
+        ? parseInt(cachedTotal).toLocaleString()
+        : '—';
+
+    function fetchDwylCount() {
+        fetch('https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.json')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                var count = parseInt(data.message) || 0;
+                document.getElementById('totalVisits').textContent = count.toLocaleString();
+                localStorage.setItem('nb_total_visits', count);
+                localStorage.setItem('nb_visit_date', today);
+            })
+            .catch(function() {});
     }
 
+    // 先注册事件，再设置 src（避免竞态）
     var badge = new Image();
-    badge.src = 'https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.svg';
-    badge.onload = badge.onerror = function() {
-        setTimeout(function() {
-            fetch('https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.json')
-                .then(function(r) { return r.json(); })
-                .then(function(data) {
-                    var count = parseInt(data.message) || 0;
-                    document.getElementById('totalVisits').textContent = count.toLocaleString();
-                    localStorage.setItem('nb_total_visits', count);
-                    localStorage.setItem('nb_visit_date', today);
-                })
-                .catch(function() {});
-        }, 800);
+    badge.onload = function() {
+        setTimeout(fetchDwylCount, 800);
     };
+    badge.onerror = function() {
+        // badge 加载失败也尝试拉取（可能已有缓存计数）
+        setTimeout(fetchDwylCount, 300);
+    };
+    badge.src = 'https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.svg';
 }
