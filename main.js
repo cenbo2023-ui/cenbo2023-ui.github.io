@@ -679,19 +679,24 @@ function initVisitorCounter() {
     localStorage.setItem('nb_today_count', todayCount);
     document.getElementById('todayVisits').textContent = todayCount.toLocaleString();
 
-    // 总访问量：始终从 dwyl 拉取最新数据，localStorage 作为降级缓存
+    // 总访问量：先显示缓存，通过 JS 加载 badge 触发 dwyl 计数，再拉取最新数据
     if (cachedTotal) {
         document.getElementById('totalVisits').textContent = parseInt(cachedTotal).toLocaleString();
     }
-    fetch('https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.json')
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-            var count = parseInt(data.message) || 0;
-            document.getElementById('totalVisits').textContent = count.toLocaleString();
-            localStorage.setItem('nb_total_visits', count);
-            localStorage.setItem('nb_visit_date', today);
-        })
-        .catch(function() {
-            // 请求失败，保持缓存值不变
-        });
+
+    var badge = new Image();
+    badge.src = 'https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.svg';
+    badge.onload = badge.onerror = function() {
+        setTimeout(function() {
+            fetch('https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.json')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var count = parseInt(data.message) || 0;
+                    document.getElementById('totalVisits').textContent = count.toLocaleString();
+                    localStorage.setItem('nb_total_visits', count);
+                    localStorage.setItem('nb_visit_date', today);
+                })
+                .catch(function() {});
+        }, 800);
+    };
 }
