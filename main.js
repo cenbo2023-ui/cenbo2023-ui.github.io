@@ -679,26 +679,19 @@ function initVisitorCounter() {
     localStorage.setItem('nb_today_count', todayCount);
     document.getElementById('todayVisits').textContent = todayCount.toLocaleString();
 
-    // 总访问量：首次或跨天时调用 hits.dwyl.com（已验证可靠）
-    if (lastVisit !== today || !cachedTotal) {
-        fetch('https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.json')
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-                var count = parseInt(data.message) || 0;
-                document.getElementById('totalVisits').textContent = count.toLocaleString();
-                localStorage.setItem('nb_total_visits', count);
-                localStorage.setItem('nb_visit_date', today);
-            })
-            .catch(function() {
-                // 降级：显示缓存值或初始值
-                if (cachedTotal) {
-                    document.getElementById('totalVisits').textContent = parseInt(cachedTotal).toLocaleString();
-                } else {
-                    document.getElementById('totalVisits').textContent = '1';
-                }
-            });
-    } else {
-        // 同日访问，直接显示缓存
+    // 总访问量：始终从 dwyl 拉取最新数据，localStorage 作为降级缓存
+    if (cachedTotal) {
         document.getElementById('totalVisits').textContent = parseInt(cachedTotal).toLocaleString();
     }
+    fetch('https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var count = parseInt(data.message) || 0;
+            document.getElementById('totalVisits').textContent = count.toLocaleString();
+            localStorage.setItem('nb_total_visits', count);
+            localStorage.setItem('nb_visit_date', today);
+        })
+        .catch(function() {
+            // 请求失败，保持缓存值不变
+        });
 }
