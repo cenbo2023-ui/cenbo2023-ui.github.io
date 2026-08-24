@@ -669,7 +669,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function initVisitorCounter() {
     const today = new Date().toISOString().split('T')[0];
     const lastVisit = localStorage.getItem('nb_visit_date');
-    const cachedTotal = localStorage.getItem('nb_total_visits');
 
     // 今日访问（本地计数器，始终可用）
     let todayCount = 1;
@@ -677,33 +676,16 @@ function initVisitorCounter() {
         todayCount = parseInt(localStorage.getItem('nb_today_count') || '0') + 1;
     }
     localStorage.setItem('nb_today_count', todayCount);
+    localStorage.setItem('nb_visit_date', today);
     document.getElementById('todayVisits').textContent = todayCount.toLocaleString();
 
-    // 总访问量：通过 JS Image 触发 dwyl 计数，再拉取最新数据
-    document.getElementById('totalVisits').textContent = cachedTotal
-        ? parseInt(cachedTotal).toLocaleString()
-        : '—';
-
-    function fetchDwylCount() {
-        fetch('https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.json')
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-                var count = parseInt(data.message) || 0;
-                document.getElementById('totalVisits').textContent = count.toLocaleString();
-                localStorage.setItem('nb_total_visits', count);
-                localStorage.setItem('nb_visit_date', today);
-            })
-            .catch(function() {});
-    }
-
-    // 先注册事件，再设置 src（避免竞态）
-    var badge = new Image();
-    badge.onload = function() {
-        setTimeout(fetchDwylCount, 800);
-    };
-    badge.onerror = function() {
-        // badge 加载失败也尝试拉取（可能已有缓存计数）
-        setTimeout(fetchDwylCount, 300);
-    };
-    badge.src = 'https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.svg';
+    // 总访问量：直接嵌入 dwyl SVG badge 图片
+    // 图片不受 CORS 限制，每次加载自动 +1 计数且显示最新数字
+    // CSS 裁掉左侧 "hits" 标签(30px)，只显示右侧数字部分(绿底白字)
+    var badgeUrl = 'https://hits.dwyl.com/cenbo2023-ui/cenbo2023-ui.github.io.svg?t=' + Date.now();
+    document.getElementById('totalVisits').innerHTML =
+        '<span style="display:inline-block;overflow:hidden;width:50px;height:20px;' +
+        'vertical-align:middle;border-radius:0 4px 4px 0;">' +
+        '<img src="' + badgeUrl + '" style="margin-left:-30px;height:20px;display:block;" alt="访问量">' +
+        '</span>';
 }
