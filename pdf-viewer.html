@@ -9,26 +9,22 @@
     font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", "PingFang SC", sans-serif; }
   #toolbar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center;
     gap: 14px; padding: 9px 16px; background: #2d2d2d; color: #eee; font-size: 14px; }
-  #title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 46%; }
-  #pages { flex: 1; text-align: center; color: #bbb; }
-  #dl { color: #4ea1ff; text-decoration: none; white-space: nowrap; }
-  #dl:hover { text-decoration: underline; }
+  #title { flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #pages { color: #bbb; white-space: nowrap; }
   #container { padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
   canvas { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.45);
     max-width: 100%; height: auto; }
   #loading, #err { padding: 48px 20px; text-align: center; color: #fff; font-size: 15px; line-height: 1.8; }
   #err { display: none; }
-  #err a { color: #4ea1ff; }
 </style>
 </head>
 <body>
   <div id="toolbar">
     <span id="title">讲义在线预览</span>
     <span id="pages">加载中…</span>
-    <a id="dl" href="#" download>下载</a>
   </div>
   <div id="loading">正在加载讲义…</div>
-  <div id="err">讲义在线预览暂不可用，请 <span id="fallback"></span></div>
+  <div id="err">讲义在线预览暂不可用，请稍后再试。</div>
   <div id="container"></div>
 
   <script src="pdfjs/pdf.js"></script>
@@ -36,20 +32,8 @@
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdfjs/pdf.worker.js';
     var params = new URLSearchParams(location.search);
     var file = params.get('file');
-    var ppt = params.get('ppt');
     var name = params.get('name') || '讲义';
     document.getElementById('title').textContent = name + ' · 在线预览';
-    document.getElementById('dl').href = file || ppt || '#';
-    document.getElementById('dl').textContent = file ? '下载 PDF' : (ppt ? '下载 PPT' : '下载');
-
-    var fallbackEl = document.getElementById('fallback');
-    if (ppt) {
-      fallbackEl.innerHTML = '<a href="' + ppt + '" target="_blank" rel="noopener">下载原 PPT</a> 用 WPS / PowerPoint 打开。';
-    } else if (file) {
-      fallbackEl.innerHTML = '<a href="' + file + '" target="_blank" rel="noopener">下载 PDF</a> 后用 PDF 阅读器打开。';
-    } else {
-      fallbackEl.textContent = '直接下载文件后查看。';
-    }
 
     if (!file) {
       document.getElementById('loading').style.display = 'none';
