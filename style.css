@@ -1820,3 +1820,47 @@ img {
     border: none;
     border-radius: 12px 12px 0 0;
 }
+
+/* ============ 神外大讲堂 在线预览 ============ */
+.lecture-viewer {
+    margin-top: 64px;
+}
+
+.lecture-viewer-title {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 24px;
+}
+
+.lecture-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: var(--gray-100);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.lecture-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.lecture-viewer-note {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 0.9rem;
+    color: var(--gray-500);
+}
+
+.lecture-viewer-note a {
+    color: var(--primary);
+    font-weight: 600;
+}
