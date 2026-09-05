@@ -641,21 +641,76 @@ img {
     font-weight: bold;
 }
 
-/* ============ 脑胶质瘤专题 ============ */
-.glioma {
-    background: linear-gradient(180deg, var(--white) 0%, #f0f6fc 50%, var(--white) 100%);
+/* ============ 神外大讲堂 · 脑胶质瘤子板块 ============ */
+.lecture-glioma {
+    margin-top: 72px;
+    padding-top: 56px;
+    border-top: 1px dashed rgba(0, 102, 204, 0.18);
+    scroll-margin-top: 96px;
 }
 
-.glioma-subtitle {
+.lecture-glioma-head {
     text-align: center;
-    font-size: 1.5rem;
+    margin-bottom: 36px;
+}
+
+.lecture-glioma-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #0066cc;
+    background: #eaf3fb;
+    border: 1px solid #c8e0f5;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+}
+
+.lecture-glioma-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--gray-900);
+    letter-spacing: 1px;
+    margin: 6px 0 14px;
+    position: relative;
+    display: inline-block;
+}
+
+.lecture-glioma-title::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 3px;
+    background: linear-gradient(90deg, #0066cc, #0099ff);
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+.lecture-glioma-lead {
+    max-width: 760px;
+    margin: 0 auto;
+    color: var(--gray-700);
+    font-size: 1.02rem;
+    line-height: 1.85;
+}
+
+.lecture-glioma-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.lecture-glioma-subtitle {
+    text-align: center;
+    font-size: 1.45rem;
     font-weight: 700;
     color: var(--gray-900);
-    margin: 56px 0 32px;
+    margin: 56px 0 28px;
     position: relative;
 }
 
-.glioma-subtitle::after {
+.lecture-glioma-subtitle::after {
     content: "";
     display: block;
     width: 48px;
@@ -665,18 +720,20 @@ img {
     border-radius: 2px;
 }
 
-.glioma-treatment-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
-    margin-top: 24px;
+.lecture-glioma-treats {
+    margin-top: 16px;
 }
 
-.glioma-treatment-item {
+.lecture-glioma-grid-treats {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.lecture-glioma-item {
     display: flex;
     align-items: flex-start;
     gap: 16px;
-    padding: 20px 22px;
+    padding: 22px 24px;
     background: var(--white);
     border: 1px solid var(--gray-200);
     border-radius: 14px;
@@ -684,13 +741,13 @@ img {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
-.glioma-treatment-item:hover {
+.lecture-glioma-item:hover {
     transform: translateY(-2px);
     border-color: #b3d4f0;
     box-shadow: 0 8px 24px rgba(0, 102, 204, 0.12);
 }
 
-.glioma-treatment-icon {
+.lecture-glioma-icon {
     flex-shrink: 0;
     font-size: 1.8rem;
     width: 44px;
@@ -702,7 +759,7 @@ img {
     border-radius: 12px;
 }
 
-.glioma-treatment-item strong {
+.lecture-glioma-item strong {
     display: block;
     color: var(--gray-900);
     font-size: 1.05rem;
@@ -710,19 +767,11 @@ img {
     font-weight: 700;
 }
 
-.glioma-treatment-item p {
+.lecture-glioma-item p {
     color: var(--gray-700);
     font-size: 0.92rem;
     line-height: 1.65;
     margin: 0;
-}
-
-.glioma-cta {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    margin-top: 48px;
-    flex-wrap: wrap;
 }
 
 /* ============ 手术视频 ============ */
@@ -1742,22 +1791,26 @@ img {
     }
 
     .expertise-grid,
-    .glioma-treatment-grid,
+    .lecture-glioma-grid,
     .video-grid {
         grid-template-columns: 1fr;
     }
 
-    .glioma-cta {
-        flex-direction: column;
-        align-items: stretch;
-        max-width: 320px;
-        margin-left: auto;
-        margin-right: auto;
+    .lecture-glioma-title {
+        font-size: 1.5rem;
     }
 
-    .glioma-subtitle {
-        font-size: 1.25rem;
+    .lecture-glioma-lead {
+        font-size: 0.95rem;
+    }
+
+    .lecture-glioma-subtitle {
+        font-size: 1.2rem;
         margin: 40px 0 24px;
+    }
+
+    .lecture-glioma-item {
+        padding: 18px 20px;
     }
 
     .resource-grid {
