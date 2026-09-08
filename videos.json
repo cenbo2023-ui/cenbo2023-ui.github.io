@@ -38,5 +38,15 @@
         "desc": "巨大天幕及中颅窝底脑膜瘤显微外科切除手术。肿瘤巨大且累及天幕裂孔区与中颅窝底，毗邻脑干、颞叶及重要血管神经，术中需精细分离肿瘤与脑组织界面、妥善处理肿瘤基底血供，在保护神经功能的前提下实现肿瘤全切。",
         "date": "2026-09-07",
         "duration": ""
+    },
+    {
+        "id": "video-005",
+        "title": "叶传红-脑膜瘤",
+        "category": "brain",
+        "source": "local",
+        "url": "https://cenbo2023-ui.github.io/files/yechuanhong-meningioma.mp4",
+        "desc": "脑膜瘤显微切除病例 · 原始手术录像，仅供同专业学术参考",
+        "date": "2026-09-08",
+        "duration": ""
     }
 ]
