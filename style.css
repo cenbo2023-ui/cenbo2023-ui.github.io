@@ -1104,6 +1104,10 @@ img {
 .contact-item {
     text-align: center;
     padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
 }
 
 .contact-icon {
@@ -1129,6 +1133,7 @@ img {
     color: var(--gray-500);
     font-size: 0.9rem;
     line-height: 1.7;
+    margin-top: auto;
 }
 
 .contact-item strong {
