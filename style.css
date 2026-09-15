@@ -1099,6 +1099,7 @@ img {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
+    align-items: stretch;
 }
 
 .contact-item {
@@ -1107,7 +1108,9 @@ img {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
+    justify-content: flex-start;
+    align-self: stretch;
+    min-height: 100%;
 }
 
 .contact-icon {
@@ -1133,7 +1136,7 @@ img {
     color: var(--gray-500);
     font-size: 0.9rem;
     line-height: 1.7;
-    margin-top: auto;
+    margin-top: auto !important;
 }
 
 .contact-item strong {
