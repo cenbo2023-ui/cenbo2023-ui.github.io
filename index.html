@@ -615,68 +615,28 @@
 
 
   <style>
-
-
-
-  .lecture-frame{display:flex;align-items:center;justify-content:center}
-
-
-
-  .lecture-load-btn{padding:14px 30px;font-size:1rem;font-weight:600;color:#fff;background:var(--primary,#2b6cb0);border:0;border-radius:8px;cursor:pointer}
-
-
-
-  .lecture-load-btn:hover{opacity:.92}
-
-
-
-  .lecture-frame iframe{width:100%;height:80vh;border:0;border-radius:8px;background:#fff}
-
-
-
-  </style>
-
-
-
-
-    <!-- 神外大讲堂 折叠菜单 -->
-    .lecture-toggle{cursor:pointer;user-select:none;}
-    .lecture-toggle .section-title{display:inline-flex;align-items:center;gap:12px;}
-    .lecture-caret{
-        display:inline-flex;align-items:center;justify-content:center;
-        width:30px;height:30px;border-radius:50%;
-        background:var(--primary-lighter);color:var(--primary);
-        font-size:18px;font-weight:700;line-height:1;
-        transition:transform .3s ease,background .3s ease,color .3s ease;
-    }
-    .lecture-toggle[aria-expanded="true"] .lecture-caret{transform:rotate(45deg);background:var(--primary);color:#fff;}
-    .lecture-menu{margin-top:30px;}
-    .lecture-sublist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;}
-    .lecture-item{
-        background:#fff;border:1px solid var(--gray-300);border-radius:var(--radius-md);
-        box-shadow:var(--shadow-sm);overflow:hidden;transition:var(--transition);
-    }
-    .lecture-item:hover{border-color:var(--primary);box-shadow:var(--shadow-md);}
-    .lecture-subtitle{
-        width:100%;text-align:left;background:none;border:0;cursor:pointer;
-        font-family:inherit;font-size:1.05rem;font-weight:600;color:var(--gray-900);
-        padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;
-    }
-    .lecture-subtitle:hover{color:var(--primary);}
-    .lecture-subtitle .lecture-caret{
-        background:var(--accent-light);color:var(--accent);flex:0 0 auto;
-    }
-    .lecture-subtitle[aria-expanded="true"] .lecture-caret{transform:rotate(45deg);background:var(--accent);color:#fff;}
-    .lecture-viewer{padding:0 22px 22px;border-top:1px solid var(--gray-100);}
-    .lecture-viewer[hidden]{display:none;}
-    .lecture-viewer-title{font-size:1rem;color:var(--gray-700);margin:16px 0 10px;}
-    .lecture-frame{width:100%;}
-    .lecture-frame iframe{width:100%;height:80vh;border:0;border-radius:8px;background:#fff;}
-    .lecture-viewer-note{font-size:.85rem;color:var(--gray-500);margin-top:8px;}
-    .lecture-viewer-note a{color:var(--primary);}
-    @media (max-width:640px){.lecture-frame iframe{height:70vh;}}
-
-</head>
+/* 神外大讲堂 折叠菜单 */
+.lecture-toggle{cursor:pointer;user-select:none;-webkit-user-select:none;}
+.lecture-toggle .section-title{display:inline-flex;align-items:center;gap:12px;margin-bottom:0;}
+.lecture-caret{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--accent,#48bb78);color:#fff;font-size:1.1rem;line-height:1;transition:transform .25s ease;}
+.lecture-toggle[aria-expanded="true"] .lecture-caret{transform:rotate(45deg);background:var(--primary,#2b6cb0);}
+.lecture-menu{padding:18px 0 0;}
+.lecture-menu[hidden]{display:none;}
+.lecture-sublist{list-style:none;padding:0;margin:0;}
+.lecture-item{border-bottom:1px solid var(--gray-100,#edf2f7);}
+.lecture-subtitle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;background:transparent;border:0;font-size:1.05rem;font-weight:500;color:var(--gray-700,#2d3748);cursor:pointer;transition:color .2s;}
+.lecture-subtitle:hover{color:var(--primary,#2b6cb0);}
+.lecture-subtitle .lecture-caret{background:var(--accent-light,#c6f6d5);color:var(--accent,#48bb78);flex:0 0 auto;margin-left:12px;}
+.lecture-subtitle[aria-expanded="true"] .lecture-caret{transform:rotate(45deg);background:var(--accent,#48bb78);color:#fff;}
+.lecture-viewer{padding:0 22px 22px;border-top:1px solid var(--gray-100,#edf2f7);}
+.lecture-viewer[hidden]{display:none;}
+.lecture-viewer-title{font-size:1rem;color:var(--gray-700,#2d3748);margin:16px 0 10px;}
+.lecture-frame{width:100%;}
+.lecture-frame iframe{width:100%;height:80vh;border:0;border-radius:8px;background:#fff;}
+.lecture-viewer-note{font-size:.85rem;color:var(--gray-500,#718096);margin-top:8px;}
+.lecture-viewer-note a{color:var(--primary,#2b6cb0);}
+@media (max-width:640px){.lecture-frame iframe{height:70vh;}}
+</style></head>
 
 
 
@@ -12855,7 +12815,7 @@
 
 
 
-    学术资源链接 ============ -->
+    <!-- ============ 学术资源链接 ============ -->
 
 
 
