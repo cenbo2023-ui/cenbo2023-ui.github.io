@@ -203,7 +203,8 @@ img {
     inset: 0;
     background: #f4f7fb url('hospital-hero-1600.jpg') center/cover no-repeat;
     background-attachment: scroll;
-    background-image: image-set(url('hospital-hero-1600.webp') type('image/webp'), url('hospital-hero-1600.jpg') type('image/jpeg'));
+    background-image: -webkit-image-set(url('hospital-hero-1600.avif') type('image/avif'), url('hospital-hero-1600.webp') type('image/webp'), url('hospital-hero-1600.jpg') type('image/jpeg'));
+    background-image: image-set(url('hospital-hero-1600.avif') type('image/avif'), url('hospital-hero-1600.webp') type('image/webp'), url('hospital-hero-1600.jpg') type('image/jpeg'));
 }
 
 .hero-overlay {
@@ -1887,7 +1888,8 @@ img {
 /* 移动端改用小尺寸 hero 图 + WebP，减少首屏流量 */
 @media (max-width: 768px) {
     .hero-bg {
-        background-image: image-set(url('hospital-hero-800.webp') type('image/webp'), url('hospital-hero-800.jpg') type('image/jpeg'));
+        background-image: -webkit-image-set(url('hospital-hero-800.avif') type('image/avif'), url('hospital-hero-800.webp') type('image/webp'), url('hospital-hero-800.jpg') type('image/jpeg'));
+        background-image: image-set(url('hospital-hero-800.avif') type('image/avif'), url('hospital-hero-800.webp') type('image/webp'), url('hospital-hero-800.jpg') type('image/jpeg'));
     }
     /* 移动端关闭毛玻璃，避免滚动时逐帧重绘 */
     .navbar,
