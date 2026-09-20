@@ -686,6 +686,6 @@ function initVisitorCounter() {
     document.getElementById('totalVisits').innerHTML =
         '<span style="display:inline-block;overflow:hidden;width:50px;height:20px;' +
         'vertical-align:middle;border-radius:0 4px 4px 0;">' +
-        '<img src="' + badgeUrl + '" style="margin-left:-30px;height:20px;display:block;" alt="访问量">' +
+        '<img src="' + badgeUrl + '" fetchpriority="low" decoding="async" style="margin-left:-30px;height:20px;display:block;" alt="访问量" onerror="var p=this.parentNode;p.style.overflow=\'visible\';p.style.width=\'auto\';p.textContent=\'—\';" >' +
         '</span>';
 }
