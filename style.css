@@ -45,7 +45,7 @@ html {
 }
 
 body {
-    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Source Han Sans SC', sans-serif;
     color: var(--gray-900);
     background: #e8f2fb;
     line-height: 1.7;
@@ -201,9 +201,9 @@ img {
 .hero-bg {
     position: absolute;
     inset: 0;
-    background: url('hospital-hero.png') center/cover no-repeat;
-    background-color: #f4f7fb;
+    background: #f4f7fb url('hospital-hero-1600.jpg') center/cover no-repeat;
     background-attachment: scroll;
+    background-image: image-set(url('hospital-hero-1600.webp') type('image/webp'), url('hospital-hero-1600.jpg') type('image/jpeg'));
 }
 
 .hero-overlay {
@@ -1880,4 +1880,32 @@ img {
 .lecture-viewer-note a {
     color: var(--primary);
     font-weight: 600;
+}
+
+
+/* ============ 移动端性能优化（2026-09-20） ============ */
+/* 移动端改用小尺寸 hero 图 + WebP，减少首屏流量 */
+@media (max-width: 768px) {
+    .hero-bg {
+        background-image: image-set(url('hospital-hero-800.webp') type('image/webp'), url('hospital-hero-800.jpg') type('image/jpeg'));
+    }
+    /* 移动端关闭毛玻璃，避免滚动时逐帧重绘 */
+    .navbar,
+    .navbar.scrolled {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.98);
+    }
+}
+
+/* 首屏以下区块延迟渲染，降低移动端首屏渲染开销 */
+#about,
+#expertise,
+#books,
+#videos,
+#lecture,
+#resources,
+#contact {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
 }
