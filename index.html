@@ -45,6 +45,16 @@
 .lecture-viewer-note a{color:var(--primary,#2b6cb0);}
 @media (max-width:640px){.lecture-frame iframe{height:70vh;}}
 
+/* 手机端 B 站视频跳转卡片（iframe 在手机上无法播放，改为点击跳转） */
+.mobile-bili-fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;height:100%;min-height:50vh;text-decoration:none;color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,#1f6fd6 0%,#1763c4 55%,#0f4ba8 100%);border-radius:8px;}
+.mobile-bili-fallback .mbf-play{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:18px;
+  box-shadow:0 4px 16px rgba(0,0,0,.25);}
+.mobile-bili-fallback .mbf-title{font-size:1.05rem;font-weight:600;text-align:center;padding:0 16px;}
+.mobile-bili-fallback .mbf-tip{font-size:.82rem;opacity:.85;margin-top:10px;}
+
 /* 联系二维码 */
 .contact-qr{display:block;width:120px;height:120px;object-fit:contain;border-radius:8px;margin:10px auto 6px;box-shadow:0 2px 8px rgba(0,0,0,.08);}
 @media (max-width:640px){.contact-qr{width:100px;height:100px;}}
@@ -549,18 +559,6 @@
                             <p class="lecture-viewer-note">下载讲义：<a href="https://cenbo2023-ui.github.io/lectures/neuro-consensus-skullbase-2026.pdf" target="_blank" rel="noopener">PDF 讲义</a></p>
                         </section>
                     </li>
-                    <li class="lecture-item">
-                        <button type="button" class="lecture-subtitle" data-viewer="csf-drainage-viewer" aria-expanded="false">
-                            <span>神经外科重症患者脑脊液外引流管理专家共识（2026版）</span>
-                            <span class="lecture-caret" aria-hidden="true">＋</span>
-                        </button>
-                        <section class="lecture-viewer" id="csf-drainage-viewer" data-src="https://cenbo2023-ui.github.io/lectures/neuro-consensus-csf-drainage-2026.html" hidden>
-                            <h3 class="lecture-viewer-title">神经外科重症患者脑脊液外引流管理专家共识（2026版）（在线阅读）</h3>
-                            <div class="lecture-frame"></div>
-                            <p class="lecture-viewer-note">打开全文：<a href="https://cenbo2023-ui.github.io/lectures/neuro-consensus-csf-drainage-2026.html" target="_blank" rel="noopener">独立页面阅读</a></p>
-                        </section>
-                    </li>
-
                 </ul>
             </div>
         </div>
