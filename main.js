@@ -44,7 +44,8 @@ function parseVideoUrl(url, source) {
         if (bvid) {
             return {
                 embedUrl: `https://player.bilibili.com/player.html?bvid=${bvid}&high_quality=1&autoplay=1`,
-                rawUrl: `https://www.bilibili.com/video/${bvid}`
+                rawUrl: `https://www.bilibili.com/video/${bvid}`,
+                bvid: bvid
             };
         }
     }
@@ -157,6 +158,12 @@ function renderVideos(filter) {
     });
 }
 
+// ============ 设备判断 ============
+function isMobileDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod|Windows Phone|HarmonyOS|MicroMessenger/i.test(navigator.userAgent)
+        || (('ontouchstart' in window || navigator.maxTouchPoints > 0) && window.innerWidth < 1024);
+}
+
 // ============ 视频弹窗 ============
 function openVideoModal(id) {
     const videos = getAllVideos();
@@ -171,7 +178,18 @@ function openVideoModal(id) {
 
     if (video.source === 'bilibili' && video.url) {
         const parsed = parseVideoUrl(video.url, 'bilibili');
-        videoHtml = `<iframe src="${parsed.embedUrl}" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:100%;height:100%;"></iframe>`;
+        if (isMobileDevice()) {
+            // 手机端 B 站 iframe 无法播放，改用跳转卡片（点击在 B 站 App/浏览器播放）
+            const biliWebUrl = parsed.rawUrl || `https://www.bilibili.com/video/${parsed.bvid || ''}`;
+            videoHtml = `
+                <a class="mobile-bili-fallback" href="${biliWebUrl}" target="_blank" rel="noopener noreferrer">
+                    <div class="mbf-play">▶</div>
+                    <div class="mbf-title">${video.title || '手术视频'}</div>
+                    <div class="mbf-tip">点击在哔哩哔哩 App / 浏览器中播放</div>
+                </a>`;
+        } else {
+            videoHtml = `<iframe src="${parsed.embedUrl}" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:100%;height:100%;"></iframe>`;
+        }
     } else if (video.source === 'youtube' && video.url) {
         const parsed = parseVideoUrl(video.url, 'youtube');
         videoHtml = `<iframe src="${parsed.embedUrl}" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;"></iframe>`;
