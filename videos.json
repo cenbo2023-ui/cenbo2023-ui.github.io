@@ -61,12 +61,12 @@
     },
     {
         "id": "video-007",
-        "title": "神经内镜微创手术演示（2026-10-23）",
+        "title": "神经内镜经蝶垂体瘤切除",
         "category": "endoscope",
-        "source": "local",
-        "url": "https://cenbo2023-ui.github.io/videos/endoscope-20261023.mp4",
-        "desc": "神经内镜微创手术操作演示视频。",
+        "source": "bilibili",
+        "url": "https://www.bilibili.com/video/BV1nunt6YEGc/",
+        "desc": "神经内镜经蝶垂体瘤切除。",
         "date": "2026-10-23",
-        "duration": "2:57"
+        "duration": ""
     }
 ]
