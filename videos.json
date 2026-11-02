@@ -63,10 +63,10 @@
         "id": "video-007",
         "title": "神经内镜经蝶垂体瘤切除",
         "category": "endoscope",
-        "source": "bilibili",
-        "url": "https://www.bilibili.com/video/BV1nunt6YEGc/",
-        "desc": "神经内镜经蝶垂体瘤切除。",
+        "source": "self",
+        "url": "videos/endoscope_pituitary.mp4",
+        "desc": "神经内镜经蝶垂体瘤切除。本站自托管高清视频，电脑与手机端均可直接播放。",
         "date": "2026-10-23",
-        "duration": ""
+        "duration": "2:46"
     }
 ]
