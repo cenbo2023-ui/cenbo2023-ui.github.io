@@ -19,6 +19,7 @@ const sourceMap = {
     bilibili: 'B站视频',
     youtube: 'YouTube',
     direct: '直链视频',
+    self: '自托管',
     local: '本地预览'
 };
 
@@ -193,8 +194,8 @@ function openVideoModal(id) {
     } else if (video.source === 'youtube' && video.url) {
         const parsed = parseVideoUrl(video.url, 'youtube');
         videoHtml = `<iframe src="${parsed.embedUrl}" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;"></iframe>`;
-    } else if (video.url && (video.url.startsWith('http') || video.url.startsWith('blob:'))) {
-        videoHtml = `<video src="${video.url}" controls autoplay style="width:100%;height:100%;object-fit:contain;"></video>`;
+    } else if (video.url && (video.url.startsWith('http') || video.url.startsWith('blob:') || video.url.startsWith('/') || video.url.startsWith('videos/') || /\.(mp4|webm|mov|ogg|m4v)$/i.test(video.url))) {
+        videoHtml = `<video src="${video.url}" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
     } else {
         videoHtml = `
             <div class="no-video">
