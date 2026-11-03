@@ -68,5 +68,15 @@
         "desc": "神经内镜经蝶垂体瘤切除。本站自托管高清视频，电脑与手机端均可直接播放。",
         "date": "2026-10-23",
         "duration": "2:46"
+    },
+    {
+        "id": "video-008",
+        "title": "中央区脑膜瘤切除",
+        "category": "brain",
+        "source": "self",
+        "url": "videos/central_meningioma_resection.mp4",
+        "desc": "中央区脑膜瘤显微外科切除手术。本站自托管高清视频，电脑与手机端均可直接播放。",
+        "date": "2026-11-03",
+        "duration": "1:41"
     }
 ]
