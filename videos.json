@@ -34,13 +34,15 @@
         "title": "巨大天幕及中颅窝底脑膜瘤切除",
         "category": "brain",
         "source": "self",
-        "url": "https://ghproxy.net/https://raw.githubusercontent.com/cenbo2023-ui/cenbo2023-ui.github.io/main/videos/tentorium_meningioma.mp4",
+        "url": "https://cdn.jsdelivr.net/gh/cenbo2023-ui/cenbo2023-ui.github.io@main/videos/hls/tentorium_meningioma/index.m3u8",
+        "hls": true,
+        "fallback": "videos/tentorium_meningioma.mp4",
         "sources": [
             "https://ghproxy.net/https://raw.githubusercontent.com/cenbo2023-ui/cenbo2023-ui.github.io/main/videos/tentorium_meningioma.mp4",
             "https://cdn.jsdelivr.net/gh/cenbo2023-ui/cenbo2023-ui.github.io@main/videos/tentorium_meningioma.mp4",
             "videos/tentorium_meningioma.mp4"
         ],
-        "desc": "巨大天幕及中颅窝底脑膜瘤显微外科切除手术。肿瘤巨大且累及天幕裂孔区与中颅窝底，毗邻脑干、颞叶及重要血管神经，术中需精细分离肿瘤与脑组织界面、妥善处理肿瘤基底血供，在保护神经功能的前提下实现肿瘤全切。本站自托管高清视频（经 CDN 加速，电脑与手机端均可快速播放）。",
+        "desc": "巨大天幕及中颅窝底脑膜瘤显微外科切除手术。肿瘤巨大且累及天幕裂孔区与中颅窝底，毗邻脑干、颞叶及重要血管神经，术中需精细分离肿瘤与脑组织界面、妥善处理肿瘤基底血供，在保护神经功能的前提下实现肿瘤全切。本站自托管 1080p 高清视频（HLS 自适应流 + CDN 加速，电脑与手机端均可流畅播放）。",
         "date": "2026-11-04",
         "duration": "4:26"
     },
