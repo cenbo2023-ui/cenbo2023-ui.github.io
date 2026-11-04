@@ -221,7 +221,9 @@ function openVideoModal(id) {
     }
 
     const sourceLabel = sourceMap[video.source] || '';
+    const hasPlayer = !!document.getElementById('modalVideoEl');
     info.innerHTML = `
+        ${hasPlayer ? speedBarHtml() : ''}
         <h3>${video.title}</h3>
         <p>${video.desc || '暂无描述'}</p>
         <div class="video-meta" style="margin-top: 12px;">
@@ -234,6 +236,80 @@ function openVideoModal(id) {
 
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    // 倍速控制：电脑 / 手机通用（手机原生播放器没有倍速按钮，靠这排按钮调速）
+    if (hasPlayer) setupVideoSpeed();
+}
+
+// ============ 播放倍速控制（电脑 + 手机通用） ============
+const SPEED_STORE_KEY = 'cenbo_video_speed';
+const SPEED_RATES = [0.75, 1, 1.25, 1.5, 2];
+
+function getSavedSpeed() {
+    let r = 1;
+    try { r = parseFloat(localStorage.getItem(SPEED_STORE_KEY) || '1'); } catch (e) {}
+    if (!isFinite(r) || r < 0.5 || r > 3) r = 1;
+    return r;
+}
+
+function saveSpeed(rate) {
+    try { localStorage.setItem(SPEED_STORE_KEY, String(rate)); } catch (e) {}
+}
+
+function applySpeed(rate) {
+    const v = document.getElementById('modalVideoEl');
+    if (!v) return;
+    try {
+        v.defaultPlaybackRate = rate;
+        v.playbackRate = rate;
+    } catch (e) {}
+}
+
+function speedBarHtml() {
+    const cur = getSavedSpeed();
+    const btns = SPEED_RATES.map(function (r) {
+        const label = (r === 1 ? '1×' : r + '×');
+        return `<button type="button" class="vsb-btn${Math.abs(r - cur) < 0.001 ? ' active' : ''}" data-rate="${r}">${label}</button>`;
+    }).join('');
+    return `<div class="video-speed-bar" id="videoSpeedBar">
+        <span class="vsb-label">播放倍速</span>
+        <div class="vsb-btns">${btns}</div>
+        <span class="vsb-hint" id="vsbHint"></span>
+    </div>`;
+}
+
+function setupVideoSpeed() {
+    const bar = document.getElementById('videoSpeedBar');
+    const v = document.getElementById('modalVideoEl');
+    if (!bar || !v) return;
+
+    const hint = document.getElementById('vsbHint');
+    let rate = getSavedSpeed();
+
+    applySpeed(rate);
+    if (hint) hint.textContent = rate === 1 ? '' : '当前 ' + rate + '×';
+
+    // 换源 / 回退 / 原生控件重载后浏览器会把速率重置为 1，这里持续兜底
+    ['loadedmetadata', 'canplay', 'play'].forEach(function (ev) {
+        v.addEventListener(ev, function () {
+            if (Math.abs(v.playbackRate - rate) > 0.001) {
+                try { v.playbackRate = rate; } catch (e) {}
+            }
+        });
+    });
+
+    bar.querySelectorAll('.vsb-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const r = parseFloat(btn.dataset.rate) || 1;
+            rate = r;
+            saveSpeed(r);
+            applySpeed(r);
+            bar.querySelectorAll('.vsb-btn').forEach(function (b) {
+                b.classList.toggle('active', b === btn);
+            });
+            if (hint) hint.textContent = (r === 1) ? '' : '当前 ' + r + '×';
+        });
+    });
 }
 
 // ============ 视频多源回退 ============

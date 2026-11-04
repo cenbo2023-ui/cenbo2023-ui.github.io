@@ -3,12 +3,12 @@
  * 部署后首次访问会安装并缓存；之后资源更新请把下方 CACHE 版本号 +1（如 v1→v2），
  * 旧缓存会在 activate 阶段自动清理。
  */
-const CACHE = 'cenbo-site-v1';
+const CACHE = 'cenbo-site-v2';
 const CORE = [
   './',
   'index.html',
-  'style.css',
-  'main.js',
+  'style.css?v=20261104a',
+  'main.js?v=20261104a',
   'videos.json',
   'DSC_7533.jpg',
   'wechat_qr.jpg',

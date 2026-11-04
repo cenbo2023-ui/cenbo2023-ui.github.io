@@ -1324,6 +1324,91 @@ img {
     gap: 12px;
 }
 
+/* ============ 播放倍速控制（电脑 + 手机通用） ============ */
+.video-speed-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 12px 24px;
+    background: var(--gray-50, #f7fafc);
+    border-bottom: 1px solid var(--gray-100, #edf2f7);
+}
+
+.vsb-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gray-600, #4a5568);
+    letter-spacing: 0.02em;
+    flex: 0 0 auto;
+}
+
+.vsb-btns {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.vsb-btn {
+    min-width: 54px;
+    padding: 7px 12px;
+    border: 1px solid var(--gray-200, #e2e8f0);
+    background: var(--white, #fff);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    color: var(--gray-700, #2d3748);
+    cursor: pointer;
+    transition: var(--transition);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.vsb-btn:hover {
+    border-color: var(--primary, #2b6cb0);
+    color: var(--primary, #2b6cb0);
+}
+
+.vsb-btn.active {
+    background: var(--primary, #2b6cb0);
+    border-color: var(--primary, #2b6cb0);
+    color: var(--white, #fff);
+    font-weight: 600;
+}
+
+.vsb-hint {
+    font-size: 0.78rem;
+    color: var(--accent, #48bb78);
+    margin-left: auto;
+}
+
+@media (max-width: 768px) {
+    .video-speed-bar {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .vsb-label {
+        font-size: 0.8rem;
+    }
+
+    .vsb-btns {
+        width: 100%;
+        gap: 6px;
+    }
+
+    .vsb-btn {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 11px 0;
+        font-size: 0.9rem;
+    }
+
+    .vsb-hint {
+        display: none;
+    }
+}
+
 .modal-info {
     padding: 24px;
 }
