@@ -74,11 +74,9 @@
         "title": "中央区脑膜瘤切除",
         "category": "brain",
         "source": "self",
-        "url": "videos/hls/central_meningioma/index.m3u8",
-        "hls": true,
-        "fallback": "videos/central_meningioma_resection.mp4",
-        "desc": "中央区脑膜瘤显微外科切除手术。本站自托管高清视频（HLS 自适应流，1080p 高清，电脑与手机端均可流畅播放）。",
+        "url": "videos/central_meningioma_resection.mp4",
+        "desc": "中央区脑膜瘤显微外科切除手术。本站自托管高清视频，电脑与手机端均可直接播放。",
         "date": "2026-11-03",
-        "duration": "3:00"
+        "duration": "1:41"
     }
 ]
