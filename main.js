@@ -194,6 +194,9 @@ function openVideoModal(id) {
     } else if (video.source === 'youtube' && video.url) {
         const parsed = parseVideoUrl(video.url, 'youtube');
         videoHtml = `<iframe src="${parsed.embedUrl}" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;"></iframe>`;
+    } else if (video.url && (video.url.toLowerCase().endsWith('.m3u8') || video.hls === true)) {
+        // HLS 自适应流（1080p 分片）：先放空 <video>，由 initHlsPlayer 注入播放器
+        videoHtml = `<video id="modalVideoEl" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
     } else if (video.url && (video.url.startsWith('http') || video.url.startsWith('blob:') || video.url.startsWith('/') || video.url.startsWith('videos/') || /\.(mp4|webm|mov|ogg|m4v)$/i.test(video.url))) {
         videoHtml = `<video id="modalVideoEl" src="${video.url}" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
     } else {
@@ -208,8 +211,12 @@ function openVideoModal(id) {
 
     wrap.innerHTML = videoHtml;
 
+    // HLS 自适应流：注入 hls.js 播放器（失败自动回退 mp4 多源）
+    if (video.hls === true || (video.url && video.url.toLowerCase().endsWith('.m3u8'))) {
+        initHlsPlayer(video);
+    }
     // 多源回退：主源（CDN 加速）失败自动切换到备用源，保证任何网络下都能播放
-    if (Array.isArray(video.sources) && video.sources.length) {
+    else if (Array.isArray(video.sources) && video.sources.length) {
         setupVideoSourceFallback('modalVideoEl', video.sources);
     }
 
@@ -246,9 +253,57 @@ function setupVideoSourceFallback(elId, sources) {
     });
 }
 
+// ============ HLS 播放器 ============
+function initHlsPlayer(video) {
+    const v = document.getElementById('modalVideoEl');
+    if (!v) return;
+
+    function useFallback() {
+        // HLS 不可用/失败：回退到 mp4（沿用 CDN 多源自动切换）
+        if (Array.isArray(video.sources) && video.sources.length) {
+            setupVideoSourceFallback('modalVideoEl', video.sources);
+        } else if (video.fallback) {
+            v.src = video.fallback;
+        }
+    }
+
+    const m3u8 = video.url;
+    if (window.Hls && window.Hls.isSupported()) {
+        const hls = new window.Hls({ maxBufferLength: 30, enableWorker: true });
+        window._hlsInstance = hls;
+        hls.loadSource(m3u8);
+        hls.attachMedia(v);
+        hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
+            v.play().catch(() => {});
+        });
+        hls.on(window.Hls.Events.ERROR, function (evt, data) {
+            if (data && data.fatal) {
+                console.warn('HLS 致命错误，回退 mp4:', data.type, data.details);
+                try { hls.destroy(); } catch (e) {}
+                window._hlsInstance = null;
+                useFallback();
+            }
+        });
+    } else if (v.canPlayType('application/vnd.apple.mpegurl')) {
+        // Safari / iOS 原生 HLS 支持
+        v.src = m3u8;
+        v.addEventListener('error', function onErr() {
+            v.removeEventListener('error', onErr);
+            useFallback();
+        });
+    } else {
+        // 不支持 HLS，直接回退
+        useFallback();
+    }
+}
+
 function closeVideoModal() {
     const modal = document.getElementById('videoModal');
     const wrap = document.getElementById('modalVideoWrap');
+    if (window._hlsInstance) {
+        try { window._hlsInstance.destroy(); } catch (e) {}
+        window._hlsInstance = null;
+    }
     modal.classList.remove('active');
     document.body.style.overflow = '';
     setTimeout(() => { wrap.innerHTML = ''; }, 300);
