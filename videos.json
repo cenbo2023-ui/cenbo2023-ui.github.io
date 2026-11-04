@@ -64,8 +64,13 @@
         "title": "神经内镜经蝶垂体瘤切除",
         "category": "endoscope",
         "source": "self",
-        "url": "videos/endoscope_pituitary.mp4",
-        "desc": "神经内镜经蝶垂体瘤切除。本站自托管高清视频，电脑与手机端均可直接播放。",
+        "url": "https://ghproxy.net/https://raw.githubusercontent.com/cenbo2023-ui/cenbo2023-ui.github.io/main/videos/endoscope_pituitary.mp4",
+        "sources": [
+            "https://ghproxy.net/https://raw.githubusercontent.com/cenbo2023-ui/cenbo2023-ui.github.io/main/videos/endoscope_pituitary.mp4",
+            "https://cdn.jsdelivr.net/gh/cenbo2023-ui/cenbo2023-ui.github.io@main/videos/endoscope_pituitary.mp4",
+            "videos/endoscope_pituitary.mp4"
+        ],
+        "desc": "神经内镜经蝶垂体瘤切除。本站自托管高清视频（经 CDN 加速，电脑与手机端均可快速播放）。",
         "date": "2026-10-23",
         "duration": "2:46"
     },
@@ -74,8 +79,13 @@
         "title": "中央区脑膜瘤切除",
         "category": "brain",
         "source": "self",
-        "url": "videos/central_meningioma_resection.mp4",
-        "desc": "中央区脑膜瘤显微外科切除手术。本站自托管高清视频，电脑与手机端均可直接播放。",
+        "url": "https://ghproxy.net/https://raw.githubusercontent.com/cenbo2023-ui/cenbo2023-ui.github.io/main/videos/central_meningioma_resection.mp4",
+        "sources": [
+            "https://ghproxy.net/https://raw.githubusercontent.com/cenbo2023-ui/cenbo2023-ui.github.io/main/videos/central_meningioma_resection.mp4",
+            "https://cdn.jsdelivr.net/gh/cenbo2023-ui/cenbo2023-ui.github.io@main/videos/central_meningioma_resection.mp4",
+            "videos/central_meningioma_resection.mp4"
+        ],
+        "desc": "中央区脑膜瘤显微外科切除手术。本站自托管高清视频（经 CDN 加速，电脑与手机端均可快速播放）。",
         "date": "2026-11-03",
         "duration": "1:41"
     }
