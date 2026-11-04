@@ -195,7 +195,7 @@ function openVideoModal(id) {
         const parsed = parseVideoUrl(video.url, 'youtube');
         videoHtml = `<iframe src="${parsed.embedUrl}" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;"></iframe>`;
     } else if (video.url && (video.url.startsWith('http') || video.url.startsWith('blob:') || video.url.startsWith('/') || video.url.startsWith('videos/') || /\.(mp4|webm|mov|ogg|m4v)$/i.test(video.url))) {
-        videoHtml = `<video src="${video.url}" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
+        videoHtml = `<video id="modalVideoEl" src="${video.url}" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
     } else {
         videoHtml = `
             <div class="no-video">
@@ -207,6 +207,11 @@ function openVideoModal(id) {
     }
 
     wrap.innerHTML = videoHtml;
+
+    // 多源回退：主源（CDN 加速）失败自动切换到备用源，保证任何网络下都能播放
+    if (Array.isArray(video.sources) && video.sources.length) {
+        setupVideoSourceFallback('modalVideoEl', video.sources);
+    }
 
     const sourceLabel = sourceMap[video.source] || '';
     info.innerHTML = `
@@ -222,6 +227,23 @@ function openVideoModal(id) {
 
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+}
+
+// ============ 视频多源回退 ============
+function setupVideoSourceFallback(elId, sources) {
+    const v = document.getElementById(elId);
+    if (!v) return;
+    let idx = 0;
+    v.src = sources[0];
+    v.addEventListener('error', function onErr() {
+        idx++;
+        if (idx < sources.length) {
+            console.warn('视频源加载失败，自动切换至备用源:', sources[idx]);
+            v.src = sources[idx];
+        } else {
+            v.removeEventListener('error', onErr);
+        }
+    });
 }
 
 function closeVideoModal() {
