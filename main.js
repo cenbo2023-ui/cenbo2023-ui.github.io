@@ -194,6 +194,9 @@ function openVideoModal(id) {
     } else if (video.source === 'youtube' && video.url) {
         const parsed = parseVideoUrl(video.url, 'youtube');
         videoHtml = `<iframe src="${parsed.embedUrl}" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;"></iframe>`;
+    } else if (video.hls && video.url && /\.m3u8$/i.test(video.url)) {
+        // HLS 自适应流（m3u8），由 initHlsPlayer 初始化播放
+        videoHtml = `<video id="hlsPlayer" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
     } else if (video.url && (video.url.startsWith('http') || video.url.startsWith('blob:') || video.url.startsWith('/') || video.url.startsWith('videos/') || /\.(mp4|webm|mov|ogg|m4v)$/i.test(video.url))) {
         videoHtml = `<video src="${video.url}" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
     } else {
@@ -207,6 +210,11 @@ function openVideoModal(id) {
     }
 
     wrap.innerHTML = videoHtml;
+
+    // 初始化 HLS 播放（如适用）
+    if (video.hls && /\.m3u8$/i.test(video.url || '')) {
+        initHlsPlayer(video);
+    }
 
     const sourceLabel = sourceMap[video.source] || '';
     info.innerHTML = `
@@ -227,9 +235,60 @@ function openVideoModal(id) {
 function closeVideoModal() {
     const modal = document.getElementById('videoModal');
     const wrap = document.getElementById('modalVideoWrap');
+    // 销毁 HLS 实例，释放缓冲
+    if (window._hlsInstance) {
+        try { window._hlsInstance.destroy(); } catch (e) {}
+        window._hlsInstance = null;
+    }
     modal.classList.remove('active');
     document.body.style.overflow = '';
     setTimeout(() => { wrap.innerHTML = ''; }, 300);
+}
+
+// ============ HLS 播放初始化 ============
+function initHlsPlayer(video) {
+    const v = document.getElementById('hlsPlayer');
+    if (!v) return;
+    const src = video.url;
+    const fallback = video.fallback || '';
+
+    function useFallback(msg) {
+        if (fallback) {
+            console.warn('HLS 播放失败，回退到 mp4:', msg);
+            v.src = fallback;
+        }
+    }
+
+    if (window.Hls && window.Hls.isSupported()) {
+        // 绝大多数浏览器（Chrome/Edge/Firefox/Android WebView）
+        const hls = new window.Hls({ maxBufferLength: 30, capLevelToPlayerSize: true });
+        window._hlsInstance = hls;
+        hls.loadSource(src);
+        hls.attachMedia(v);
+        hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
+            // 部分浏览器需用户手势才能自动播放，忽略异常
+            v.play().catch(function () {});
+        });
+        hls.on(window.Hls.Events.ERROR, function (evt, data) {
+            if (!data || !data.fatal) return;
+            if (data.type === window.Hls.ErrorTypes.NETWORK_ERROR) {
+                hls.startLoad();
+            } else if (data.type === window.Hls.ErrorTypes.MEDIA_ERROR) {
+                hls.recoverMediaError();
+            } else {
+                useFallback(data.details);
+                hls.destroy();
+                window._hlsInstance = null;
+            }
+        });
+    } else if (v.canPlayType('application/vnd.apple.mpegurl')) {
+        // Safari / iOS 原生支持 HLS
+        v.src = src;
+        v.addEventListener('error', function () { useFallback('native error'); });
+    } else if (fallback) {
+        // 浏览器不支持 HLS，回退到普通 mp4
+        useFallback('no hls support');
+    }
 }
 
 // ============ 视频筛选 ============
