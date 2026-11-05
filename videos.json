@@ -95,5 +95,20 @@
         "desc": "中央区脑膜瘤显微外科切除手术。本站自托管高清视频（经 CDN 加速，电脑与手机端均可快速播放）。",
         "date": "2026-11-03",
         "duration": "1:41"
+    },
+    {
+        "id": "video-009",
+        "title": "脑膜瘤显微切除",
+        "category": "brain",
+        "source": "self",
+        "url": "https://ghproxy.net/https://raw.githubusercontent.com/cenbo2023-ui/cenbo2023-ui.github.io/main/videos/meningioma_1103.mp4",
+        "sources": [
+            "https://ghproxy.net/https://raw.githubusercontent.com/cenbo2023-ui/cenbo2023-ui.github.io/main/videos/meningioma_1103.mp4",
+            "https://cdn.jsdelivr.net/gh/cenbo2023-ui/cenbo2023-ui.github.io@main/videos/meningioma_1103.mp4",
+            "videos/meningioma_1103.mp4"
+        ],
+        "desc": "脑膜瘤显微外科切除手术。本站自托管视频（经 CDN 加速，电脑与手机端均可快速播放）。",
+        "date": "2026-11-05",
+        "duration": "1:41"
     }
 ]
