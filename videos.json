@@ -106,22 +106,5 @@
         "date": "2026-11-03",
         "duration": "1:41",
         "poster": "videos/central_meningioma_resection_poster.jpg"
-    },
-    {
-        "id": "video-013",
-        "title": "神经内镜手术病例 · 2026-10-23",
-        "category": "endoscope",
-        "source": "self",
-        "url": "https://ghproxy.net/https://raw.githubusercontent.com/cenbo2023-ui/cenbo2023-ui.github.io/main/videos/endoscope-20261023.mp4",
-        "fallback": "videos/endoscope-20261023.mp4",
-        "sources": [
-            "https://ghproxy.net/https://raw.githubusercontent.com/cenbo2023-ui/cenbo2023-ui.github.io/main/videos/endoscope-20261023.mp4",
-            "https://cdn.jsdelivr.net/gh/cenbo2023-ui/cenbo2023-ui.github.io@main/videos/endoscope-20261023.mp4",
-            "videos/endoscope-20261023.mp4"
-        ],
-        "poster": "videos/endoscope-20261023_poster.jpg",
-        "desc": "本站立自托管手术录像（HLS 自适应流 + CDN 加速，电脑与手机端均可流畅播放）。",
-        "date": "2026-10-23",
-        "duration": "2:56"
     }
 ]
