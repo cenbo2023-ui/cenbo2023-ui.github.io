@@ -243,7 +243,7 @@ function openVideoModal(id) {
 
 // ============ 播放倍速控制（电脑 + 手机通用） ============
 const SPEED_STORE_KEY = 'cenbo_video_speed';
-const SPEED_RATES = [0.75, 1, 1.25, 1.5, 2];
+const SPEED_RATES = [0.75, 1, 1.25, 1.5, 2, 2.5, 3];
 
 function getSavedSpeed() {
     let r = 1;
@@ -350,6 +350,10 @@ function initHlsPlayer(video) {
         hls.loadSource(m3u8);
         hls.attachMedia(v);
         hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
+            // 锁定最高画质，保证加速播放时画面依然清晰（避免自适应降码率导致变糊）
+            try {
+                if (hls.levels && hls.levels.length) hls.currentLevel = hls.levels.length - 1;
+            } catch (e) {}
             v.play().catch(() => {});
         });
         hls.on(window.Hls.Events.ERROR, function (evt, data) {
