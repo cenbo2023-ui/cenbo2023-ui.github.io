@@ -1306,6 +1306,7 @@ img {
     width: 100%;
     background: #000;
     aspect-ratio: 16/9;
+    position: relative;
 }
 
 .modal-video-wrap video {
@@ -1322,6 +1323,36 @@ img {
     text-align: center;
     flex-direction: column;
     gap: 12px;
+}
+
+/* ============ 视频加载提示（消除黑屏转圈观感） ============ */
+.video-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+}
+.vl-spinner {
+    width: 42px;
+    height: 42px;
+    border: 4px solid rgba(255, 255, 255, 0.25);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: vl-spin 0.9s linear infinite;
+}
+.vl-text {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+@keyframes vl-spin {
+    to { transform: rotate(360deg); }
 }
 
 /* ============ 播放倍速控制（电脑 + 手机通用） ============ */

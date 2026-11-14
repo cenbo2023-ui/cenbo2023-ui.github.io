@@ -196,9 +196,9 @@ function openVideoModal(id) {
         videoHtml = `<iframe src="${parsed.embedUrl}" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;"></iframe>`;
     } else if (video.url && (video.url.toLowerCase().endsWith('.m3u8') || video.hls === true)) {
         // HLS 自适应流（1080p 分片）：先放空 <video>，由 initHlsPlayer 注入播放器
-        videoHtml = `<video id="modalVideoEl" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
+        videoHtml = `<video id="modalVideoEl" poster="${video.poster || ''}" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
     } else if (video.url && (video.url.startsWith('http') || video.url.startsWith('blob:') || video.url.startsWith('/') || video.url.startsWith('videos/') || /\.(mp4|webm|mov|ogg|m4v)$/i.test(video.url))) {
-        videoHtml = `<video id="modalVideoEl" src="${video.url}" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
+        videoHtml = `<video id="modalVideoEl" src="${video.url}" poster="${video.poster || ''}" controls playsinline preload="auto" style="width:100%;height:100%;object-fit:contain;background:#000;"></video>`;
     } else {
         videoHtml = `
             <div class="no-video">
@@ -218,6 +218,15 @@ function openVideoModal(id) {
     // 多源回退：主源（CDN 加速）失败自动切换到备用源，保证任何网络下都能播放
     else if (Array.isArray(video.sources) && video.sources.length) {
         setupVideoSourceFallback('modalVideoEl', video.sources);
+    }
+
+    // 打开即显示加载提示（海报做底），缓冲就绪自动消失，消除黑屏转圈观感
+    if (document.getElementById('modalVideoEl')) {
+        showVideoLoading();
+        const _v = document.getElementById('modalVideoEl');
+        ['canplay', 'playing'].forEach(function (ev) {
+            _v.addEventListener(ev, hideVideoLoading);
+        });
     }
 
     const sourceLabel = sourceMap[video.source] || '';
@@ -329,6 +338,21 @@ function setupVideoSourceFallback(elId, sources) {
     });
 }
 
+// ============ 视频加载提示（消除黑屏转圈观感） ============
+function showVideoLoading() {
+    const wrap = document.getElementById('modalVideoWrap');
+    if (!wrap || document.getElementById('videoLoading')) return;
+    const el = document.createElement('div');
+    el.id = 'videoLoading';
+    el.className = 'video-loading';
+    el.innerHTML = '<div class="vl-spinner" aria-hidden="true"></div><div class="vl-text">视频加载中…</div>';
+    wrap.appendChild(el);
+}
+function hideVideoLoading() {
+    const el = document.getElementById('videoLoading');
+    if (el && el.parentNode) el.parentNode.removeChild(el);
+}
+
 // ============ HLS 播放器 ============
 function initHlsPlayer(video) {
     const v = document.getElementById('modalVideoEl');
@@ -343,11 +367,43 @@ function initHlsPlayer(video) {
         }
     }
 
-    const m3u8 = video.url;
-    if (window.Hls && window.Hls.isSupported()) {
-        const hls = new window.Hls({ maxBufferLength: 30, enableWorker: true });
+    const CDN_HOSTS = ['cdn.jsdelivr.net', 'fastly.jsdelivr.net', 'gcore.jsdelivr.net'];
+    let cdnIdx = 0;
+    let hls = null;
+
+    function m3u8Url() {
+        let u = video.url;
+        for (let i = 0; i < CDN_HOSTS.length; i++) {
+            if (u.indexOf(CDN_HOSTS[i]) !== -1) {
+                const host = CDN_HOSTS[Math.min(cdnIdx, CDN_HOSTS.length - 1)];
+                u = u.replace(CDN_HOSTS[i], host);
+                break;
+            }
+        }
+        return u;
+    }
+
+    function startHls() {
+        if (hls) { try { hls.destroy(); } catch (e) {} }
+        hls = new window.Hls({
+            // 更快出首帧 + 抗网络抖动
+            maxBufferLength: 20,
+            maxMaxBufferLength: 40,
+            backBufferLength: 30,
+            maxStarvationDelay: 4,
+            maxLoadingDelay: 4,
+            enableWorker: true,
+            lowLatencyMode: false,
+            manifestLoadingTimeOut: 20000,
+            manifestLoadingMaxRetry: 4,
+            manifestLoadingRetryDelay: 800,
+            fragLoadingTimeOut: 20000,
+            fragLoadingMaxRetry: 6,
+            fragLoadingRetryDelay: 1000,
+            abrEwmaDefaultEstimate: 800000
+        });
         window._hlsInstance = hls;
-        hls.loadSource(m3u8);
+        hls.loadSource(m3u8Url());
         hls.attachMedia(v);
         hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
             // 锁定最高画质，保证加速播放时画面依然清晰（避免自适应降码率导致变糊）
@@ -357,16 +413,38 @@ function initHlsPlayer(video) {
             v.play().catch(() => {});
         });
         hls.on(window.Hls.Events.ERROR, function (evt, data) {
-            if (data && data.fatal) {
-                console.warn('HLS 致命错误，回退 mp4:', data.type, data.details);
+            if (!data || !data.fatal) return;
+            if (data.type === window.Hls.ErrorTypes.NETWORK_ERROR) {
+                // 当前 CDN 镜像拉不动：自动切到下一个镜像；仍失败再回退 mp4
+                if (cdnIdx < CDN_HOSTS.length - 1) {
+                    cdnIdx++;
+                    console.warn('HLS 网络错误，切换 CDN 镜像:', CDN_HOSTS[cdnIdx]);
+                    startHls();
+                    return;
+                }
+                if (data.details === window.Hls.ErrorDetails.MANIFEST_LOAD_ERROR ||
+                    data.details === window.Hls.ErrorDetails.MANIFEST_PARSING_ERROR) {
+                    try { hls.destroy(); } catch (e) {}
+                    window._hlsInstance = null;
+                    useFallback();
+                    return;
+                }
+                try { hls.startLoad(); } catch (e) {}
+            } else if (data.type === window.Hls.ErrorTypes.MEDIA_ERROR) {
+                try { hls.recoverMediaError(); } catch (e) {}
+            } else {
                 try { hls.destroy(); } catch (e) {}
                 window._hlsInstance = null;
                 useFallback();
             }
         });
+    }
+
+    if (window.Hls && window.Hls.isSupported()) {
+        startHls();
     } else if (v.canPlayType('application/vnd.apple.mpegurl')) {
         // Safari / iOS 原生 HLS 支持
-        v.src = m3u8;
+        v.src = m3u8Url();
         v.addEventListener('error', function onErr() {
             v.removeEventListener('error', onErr);
             useFallback();
@@ -384,6 +462,7 @@ function closeVideoModal() {
         try { window._hlsInstance.destroy(); } catch (e) {}
         window._hlsInstance = null;
     }
+    hideVideoLoading();
     modal.classList.remove('active');
     document.body.style.overflow = '';
     setTimeout(() => { wrap.innerHTML = ''; }, 300);

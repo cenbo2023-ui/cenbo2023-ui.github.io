@@ -24,7 +24,8 @@
             "https://ghproxy.net/https://raw.githubusercontent.com/cenbo2023-ui/cenbo2023-ui.github.io/main/videos/cervical_ependymoma_2.mp4",
             "https://cdn.jsdelivr.net/gh/cenbo2023-ui/cenbo2023-ui.github.io@main/videos/cervical_ependymoma_2.mp4",
             "videos/cervical_ependymoma_2.mp4"
-        ]
+        ],
+        "poster": "videos/hls/cervical_ependymoma_2/poster.jpg"
     },
     {
         "id": "video-003",
