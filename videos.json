@@ -106,5 +106,17 @@
         "date": "2026-11-03",
         "duration": "1:41",
         "poster": "videos/central_meningioma_resection_poster.jpg"
+    },
+    {
+        "id": "video-009",
+        "title": "C1-2神经鞘瘤切除",
+        "category": "spine",
+        "source": "bilibili",
+        "url": "https://www.bilibili.com/video/BV1BUst66EtV/",
+        "desc": "C1-2 神经鞘瘤显微外科切除手术视频。",
+        "date": "2026-11-20",
+        "duration": "",
+        "thumb": "videos/c1_2_neurinoma_cover.jpg",
+        "poster": "videos/c1_2_neurinoma_cover.jpg"
     }
 ]
